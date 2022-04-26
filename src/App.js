@@ -5,8 +5,15 @@ import SetupForm from "./SetupForm"
 import Loading from "./Loading"
 import Modal from "./Modal"
 function App() {
-  const { waiting, loading, questions, index, correct, nextQuestion } =
-    useGlobalContext()
+  const {
+    waiting,
+    loading,
+    questions,
+    index,
+    correct,
+    nextQuestion,
+    checkAnswer,
+  } = useGlobalContext()
 
   if (waiting) {
     return <SetupForm />
@@ -20,11 +27,9 @@ function App() {
 
   const answers = [...incorrect_answers, correct_answer]
 
-
-
   return (
     <main>
-      {/* <Modal /> */}
+      <Modal />
       <section className='quiz'>
         <p className='correct-answers'>
           correct answers: {correct} / {index}
@@ -37,6 +42,7 @@ function App() {
                 <button
                   key={index}
                   dangerouslySetInnerHTML={{ __html: answer }}
+                  onClick={() => checkAnswer(answer === correct_answer)}
                   className='answer-btn'
                 />
               )
@@ -52,5 +58,3 @@ function App() {
 }
 
 export default App
-
-// {category: 'Science: Computers', type: 'multiple', difficulty: 'easy', question: 'According to the International System of Units, how many bytes are in a kilobyte of RAM?', correct_answer: '1000', …}
